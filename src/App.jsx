@@ -19,7 +19,10 @@ function App() {
   //function for add button
   function handleAdd() {
     setCount((prevCount) => prevCount + 1);
-    setTodos([...prevState, { id: count, text: todosText, status: false }]);
+    setTodos((prevTodos) => [
+      ...prevTodos,
+      { id: count, text: todosText, status: false },
+    ]);
   }
 
   //form submit to prevent page refresh
