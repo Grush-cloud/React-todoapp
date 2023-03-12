@@ -7,7 +7,6 @@ import "./App.css";
 library.add(faCheck, faPlus);
 
 function App() {
-  const [count, setCount] = useState(0);
   const [todos, setTodos] = useState(
     () => JSON.parse(localStorage.getItem("todos")) || []
   );
@@ -25,11 +24,11 @@ function App() {
 
   //function for add button
   function handleAdd() {
-    setCount(count + 1);
     setTodos((prevTodos) => [
       ...prevTodos,
-      { id: count, text: todosText, status: false },
+      { id: Math.random(), text: todosText, status: false },
     ]);
+    setTodosText("");
   }
 
   //form submit to prevent page refresh
@@ -55,11 +54,8 @@ function App() {
 
   //displays to-do-list items
   const showText = todos.map((txt) => (
-    <div className="todo">
-      <p
-        key={txt.id}
-        className={!txt.status ? "todo-item" : "todo-item-completed"}
-      >
+    <div className="todo" key={txt.id}>
+      <p className={!txt.status ? "todo-item" : "todo-item-completed"}>
         <span className="todo.text">{txt.text}</span>
       </p>
 
@@ -90,6 +86,7 @@ function App() {
           type="text"
           placeholder="Type todo here"
           onChange={handleOnChange}
+          value={todosText}
         />
 
         {todosText.length > 0 && (
