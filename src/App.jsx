@@ -69,7 +69,6 @@ function App() {
       )}
     </div>
   ));
-  console.log(todos);
 
   return (
     <div className="App">
