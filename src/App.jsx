@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheck, faPlus } from "@fortawesome/free-solid-svg-icons";
@@ -7,9 +7,16 @@ import "./App.css";
 library.add(faCheck, faPlus);
 
 function App() {
-  const [count, setCount] = useState(1);
-  const [todos, setTodos] = useState([]);
+  const [count, setCount] = useState(0);
+  const [todos, setTodos] = useState(
+    () => JSON.parse(localStorage.getItem("todos")) || []
+  );
   const [todosText, setTodosText] = useState("");
+
+  useEffect(
+    () => localStorage.setItem("todos", JSON.stringify(todos)),
+    [todos]
+  );
 
   //function that gets text that is typed in the input.
   function handleOnChange(e) {
@@ -18,7 +25,7 @@ function App() {
 
   //function for add button
   function handleAdd() {
-    setCount((prevCount) => prevCount + 1);
+    setCount(count + 1);
     setTodos((prevTodos) => [
       ...prevTodos,
       { id: count, text: todosText, status: false },
@@ -66,6 +73,7 @@ function App() {
       )}
     </div>
   ));
+  console.log(todos);
 
   return (
     <div className="App">
